@@ -1,7 +1,7 @@
-#devid=myname
-#devtitle=My Name
-#gameid=mygame
-#gametitle=My Game
+#devid=shanshaji
+#devtitle=Shan Shaji
+#gameid=dragonShoot
+#gametitle=Dragon Shooter
 #version=0.1
 #icon=metadata/icon.png
 #compile_ruby=false
