@@ -1,12 +1,33 @@
+# class Dragon
+#   attr_sprite
+
+#   def initialize
+#     @x = 100
+#     @y = 100
+#     @w = 50
+#     @h = 50
+#     @path = "sprites/misc/dragon-0.png"
+#   end
+
+#   def fly(args)
+  	
+#   	dragon_wing_position = 0 unless dragon_wing_position
+#   	dragon_wing_position += 0.1
+# 		dragon_wing_position = 0 if dragon_wing_position >= 5
+#   	@path = "sprites/misc/dragon-#{dragon_wing_position.to_i}.png"
+#   end
+# end
+
 class Dragon
 	def initialize(args, size=50)
 		@args = args
 		@size = size
+		@screen_bound_x = 1280
+		@screen_bound_y = 550
 	end
 
 	def dragon
 		@args.state.size = @size
-		# Screen Boundries set to not interfear with the user interface
 		@args.state.highscore ||= 0
 		if !@args.state.dragon_x && @args.state.lives <= 0
 			@args.state.dragon_x = 100
@@ -52,15 +73,13 @@ def movement
 end
 
 def screen_bound
-		screen_bound_x = 1280
-		screen_bound_y = 550
 		if @args.state.dragon_y <= 0
-			@args.state.dragon_y = screen_bound_y
-		elsif  @args.state.dragon_y >= screen_bound_y
+			@args.state.dragon_y = @screen_bound_y
+		elsif  @args.state.dragon_y >= @screen_bound_y
 			@args.state.dragon_y = 1
 		elsif  @args.state.dragon_x <= 0
-			@args.state.dragon_x = screen_bound_x
-		elsif  @args.state.dragon_x >= screen_bound_x
+			@args.state.dragon_x = @screen_bound_x
+		elsif  @args.state.dragon_x >= @screen_bound_x
 			@args.state.dragon_x = 1
 		end
 	end
@@ -68,7 +87,23 @@ end
 
 def attack
 	if @args.inputs.keyboard.space
-		@args.outputs.sprites << [@args.state.dragon_x + @size , @args.state.dragon_y + 3, 20, 20, 'mygame/sprites/misc/explosion-5.png', @args.state.direction]
+  	flame = Flame.new(@args.state.dragon_x, @args.state.dragon_y, @size, @args.state.direction)
+		@args.outputs.sprites << { x: flame.x , y: flame.y, w: flame.w, h: flame.h, path: flame.path, angle: flame.direction }
+	end
+end
+
+class Flame
+	attr_accessor :x, :y, :size, :direction, :w, :h, :path, :speed, :distance
+	def initialize(x,y,size,direction)
+		@x = x + size
+		@y = y + 3
+		@size = size
+		@direction = direction
+		@w = 20
+		@h = 20
+		@path = 'mygame/sprites/misc/explosion-5.png'
+		@speed = 2
+		@distance = 0
 	end
 end
 
