@@ -51,10 +51,10 @@ def user_interface(args)
   args.outputs.sprites << { x: 75, y: 697.5, w: 10, h: 10, path: 'mygame/sprites/circle/green.png', angle: 90 } if args.state.lives > 2
   args.outputs.sprites << { x: 90, y: 697.5, w: 10, h: 10, path: 'mygame/sprites/circle/green.png', angle: 90 } if args.state.lives > 3
   if ticks % 255 < 127
-    args.outputs.labels << [640, 655, 'Press WASD to Move', 0, 1, 0, 0, 0, ticks % 255]
-    args.outputs.labels << [640, 625, 'Press Space to Shoot', 0, 1, 0, 0, 0, ticks % 255]
+    args.outputs.labels << [x: 640, y: 655, text: 'Press WASD to Move', size_enum: 0, alignment_enum: 1, r: 0, g: 0, b: 0, a: ticks % 255]
+    args.outputs.labels << [x: 640, y: 625, text: 'Press Space to Shoot', size_enum: 0, alignment_enum: 1, r: 0, g: 0, b: 0, a: ticks % 255]
   else
-    args.outputs.labels << [640, 655, 'Press WASD to Move', 0, 1, 0, 0, 0, 255 - ticks % 255]
-    args.outputs.labels << [640, 625, 'Press Space to Shoot', 0, 1, 0, 0, 0, 255 - ticks % 255]
+    args.outputs.labels << [x: 640, y: 655, text: 'Press WASD to Move', size_enum: 0, alignment_enum: 1, r: 0, g: 0, b: 0, a: 255 - ticks % 255]
+    args.outputs.labels << [x: 640, y: 625, text: 'Press Space to Shoot', size_enum: 0, alignment_enum: 1, r: 0, g: 0, b: 0, a: 255 - ticks % 255]
   end
 end
