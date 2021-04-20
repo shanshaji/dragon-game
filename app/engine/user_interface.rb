@@ -1,3 +1,5 @@
+require 'app/engine/star.rb'
+
 def user_interface(args)
   ticks = args.state.tick_count
   seconds = (ticks / 60).round(0)
@@ -57,4 +59,9 @@ def user_interface(args)
     args.outputs.labels << [x: 640, y: 655, text: 'Press WASD to Move', size_enum: 0, alignment_enum: 1, r: 0, g: 0, b: 0, a: 255 - ticks % 255]
     args.outputs.labels << [x: 640, y: 625, text: 'Press Space to Shoot', size_enum: 0, alignment_enum: 1, r: 0, g: 0, b: 0, a: 255 - ticks % 255]
   end
+  if args.state.tick_count == 1
+    args.state.stars = @star_count.map { |i| Star.new args.grid }
+  end
+  args.state.stars.each(&:move)
+  args.outputs.sprites << args.state.stars
 end
