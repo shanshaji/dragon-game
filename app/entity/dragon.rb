@@ -1,14 +1,14 @@
 require 'app/entity/flame.rb'
 class Dragon < Game
   attr_sprite
-  def initialize
-    @x = 100
-    @y = 100
-    @w = 50
-    @h = 50
-    @path = "sprites/misc/dragon-0.png"
+  def initialize(x: 100, y: 300, w: 50, h: 50, path: "sprites/misc/dragon-0.png", movement_speed: 1)
+    @x = x
+    @y = y
+    @w = w
+    @h = h
+    @path = path
     @angle = 0
-    @movement_speed = 1
+    @movement_speed = movement_speed
     @flip_vertically = false
   end
 
@@ -26,7 +26,9 @@ class Dragon < Game
   	sprite_index = start_looping_at.frame_index number_of_sprites,
                                               number_of_frames_to_show_each_sprite,
                                               does_sprite_loop
-  	@path = "sprites/misc/dragon-#{sprite_index}.png"
+    file_name = path.split(".")[0]
+    file_name[-1] = sprite_index.to_s
+  	@path = "#{file_name}.png"
   end
 
   def movement(args)

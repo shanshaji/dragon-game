@@ -11,8 +11,10 @@ class Game
   	@screen_bound_x = 1280
     @screen_bound_y = 550
     @star_count = 100
-    @dragon = Dragon.new()
-    @my_sprites = [@dragon]
+    @dragon = Dragon.new
+    # @enemy_dragon = Dragon.new(x: 300, y: 200, w: 150, h: 150, path: "sprites/shan/dragon/Walk1.png", movement_speed: 1)
+    @enemy_dragon = EnemyDragon.new(x: 680, y: 180, w: 150, h: 150, path: "sprites/shan/dragon/Walk1.png", movement_speed: 1)
+    @my_sprites = [@dragon, @enemy_dragon]
   end
 
   def perform_tick(args)
@@ -25,6 +27,8 @@ class Game
   def setup(args)
   	user_interface args
   	args.state.dragon ||= @dragon
+  	@enemy_dragon.animate
+  	screen_bound(@enemy_dragon)
   	screen_bound(@dragon)
   end
 

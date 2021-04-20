@@ -1,45 +1,51 @@
-def enemy(args)
-  args.state.enemy_time ||= args.state.tick_count
+require 'app/entity/flame.rb'
+class EnemyDragon < Game
+  attr_sprite
+  def initialize(x: 100, y: 100, w: 50, h: 50, path: "sprites/misc/dragon-0.png", movement_speed: 1)
+    @x = x
+    @y = y
+    @w = w
+    @h = h
+    @path = path
+    @angle = 0
+    @movement_speed = movement_speed
+    @angle = 0
+    @flip_horizontally = true
+  end
 
-  if args.state.circle_x && ((args.state.tick_count - args.state.enemy_time) / 60 > 3)
-    unless args.state.e1_x
-      args.state.e1_x = (args.state.tick_count * rand(args.state.random)) % args.state.screen_bound_x
-      args.state.e1_y = (args.state.tick_count * rand(args.state.random)) % args.state.screen_bound_y
-      args.state.e1_size = 75
-      bound(args, args.state.e1_x, args.state.e1_y, args.state.e1_size)
-      args.state.e1_x = args.state.x
-      args.state.e1_y = args.state.y
-    end
-    if args.state.e1_x
-      args.state.e1_direction = args.state.tick_count % 90
-      args.outputs.sprites << [args.state.e1_x, args.state.e1_y, args.state.e1_size, args.state.e1_size,
-                               'mygame/circle/black.png', args.state.e1_direction]
-      collision(args, args.state.e1_x, args.state.circle_x, args.state.e1_y, args.state.circle_y, args.state.e1_size,
-                args.state.sprite_size)
-      if args.state.collisions == 1
-        ouch args
-        args.state.enemy_time = args.state.tick_count
-        args.state.e1_x = nil
-        args.state.e1_y = nil
-        args.state.kills += 1
-        score args
-      end
-    end
-    args.state.bullets.each do |e|
-      next unless e.exists && args.state.e1_x
+  def animate()
+    fly
+    move
+    attack
+  end
 
-      collision(args, args.state.e1_x, e.x, args.state.e1_y, e.y, args.state.e1_size, e.size)
-      next unless args.state.collisions == 1
+  def fly
+    start_looping_at = 0
+    number_of_sprites = 4
+    number_of_frames_to_show_each_sprite = 4
+    does_sprite_loop = true
+    sprite_index = start_looping_at.frame_index number_of_sprites,
+                                              number_of_frames_to_show_each_sprite,
+                                              does_sprite_loop
+    file_name = path.split(".")[0]
+    file_name[-1] = sprite_index.to_s
+    @path = "#{file_name}.png"
+  end
 
-      args.state.kills += 1
-      score args
-      args.state.enemy_time = args.state.tick_count
-      args.state.e1_x = nil
-      args.state.e1_y = nil
-      e.y = nil
-      e.x = nil
-      e.exists = nil
+  def move
+    @x += @movement_speed
+    if @x >= 780
+      @angle = 0
+      @movement_speed = -1
+      @flip_vertically = false
+    elsif @x <= 600
+      @angle = 180
+      @movement_speed  = 1
+      @flip_vertically = true
     end
-    args
+  end
+
+  def attack
+    Flame.new(@x, @y, @angle)
   end
 end
