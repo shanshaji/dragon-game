@@ -1,4 +1,4 @@
-require 'app/entity/flame.rb'
+require 'app/entity/fire_ball.rb'
 class Dragon < Game
   attr_sprite
   def initialize(x: 100, y: 300, w: 50, h: 50, path: "sprites/misc/dragon-0.png", movement_speed: 1)
@@ -10,12 +10,14 @@ class Dragon < Game
     @angle = 0
     @movement_speed = movement_speed
     @flip_vertically = false
+    @fire_balls =  Array.new(100) { FireBall.new()}
   end
 
   def animate(args)
     fly
 		movement(args)
-		attack
+    # args.state.fire_balls = @fire_balls
+		# attack(args)
   end
 
   def fly
@@ -33,28 +35,35 @@ class Dragon < Game
 
   def movement(args)
 		if args.inputs.keyboard.d
-			self.x += @movement_speed
-			self.angle = 0
-			self.flip_vertically = false
+			@x += @movement_speed
+			@angle = 0
+			@flip_vertically = false
 		end
 		if args.inputs.keyboard.w
-			self.y += @movement_speed
-			self.angle = 90
-			self.flip_vertically = false
+			@y += @movement_speed
+			@angle = 90
+			@flip_vertically = false
 		end
 		if args.inputs.keyboard.a
-			self.x -= @movement_speed
-			self.angle = 180
-			self.flip_vertically = true
+			@x -= @movement_speed
+			@angle = 180
+			@flip_vertically = true
 		end
 		if args.inputs.keyboard.s
-			self.y -= @movement_speed
-			self.angle = 270
-			self.flip_vertically = false
+			@y -= @movement_speed
+			@angle = 270
+			@flip_vertically = false
 		end
 	end
 
-	def attack
-		Flame.new(@x, @y, @angle)
+	def attack(enemy, args)
+    # if args.inputs.keyboard.key_down.space
+		  fire_ball = @fire_balls.pop()
+      # if fire_ball
+      #   args.outputs.sprites << fire_ball.cast(@x, @y, @angle) 
+      #   args.state.fire_ball = fire_ball
+      # end
+      args.state.fire_balls << fire_ball.cast(x: @x, y: @y, angle: @angle, e_x: enemy.x, e_y: enemy.y) if fire_ball
+    # end
 	end
 end
