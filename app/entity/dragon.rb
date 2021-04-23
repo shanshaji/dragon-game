@@ -1,7 +1,12 @@
 require 'app/entity/fire_ball.rb'
+require 'app/engine/animation_generator.rb'
+require 'app/engine/ai_move_logic.rb'
+require 'app/engine/ai_fire_ball_logic.rb'
+
 class Dragon < Game
   attr_sprite
-  def initialize(x: 100, y: 300, w: 50, h: 50, path: "sprites/misc/dragon-0.png", movement_speed: 1)
+  attr_accessor :keys, :cool_down_time, :movement_speed
+  def initialize(type: :normal, flip_horizontally: false, x: 100, y: 300, w: 50, h: 50, path: "sprites/misc/dragon-0.png", cool_down_time: 100, movement_speed: 1, no_of_sprites: 5, keys: {forward: :d, up: :w, left: :a, down: :s, fire_key: :space})
     @x = x
     @y = y
     @w = w
@@ -10,60 +15,64 @@ class Dragon < Game
     @angle = 0
     @movement_speed = movement_speed
     @flip_vertically = false
-    @fire_balls =  Array.new(100) { FireBall.new()}
+    @flip_horizontally = flip_horizontally
+    @keys = keys
+    @no_of_sprites = no_of_sprites
+    @cool_down_time = cool_down_time
+    @type = type
+    if type == :normal
+      @fire_balls =  Array.new(100) { FireBall.new()}
+    else
+      @fire_balls =  Array.new(100) { FireBall.new(path: 'mygame/sprites/shan/dragon/Fire_Attack-0.png', size: 50, move_logic: fire_ball_move_logic)}
+      @move_logic = dragon_move_logic
+    end
   end
 
   def animate(args)
     fly
 		movement(args)
-    # args.state.fire_balls = @fire_balls
-		# attack(args)
   end
 
   def fly
-  	start_looping_at = 0
-  	number_of_sprites = 5
-  	number_of_frames_to_show_each_sprite = 4
-  	does_sprite_loop = true
-  	sprite_index = start_looping_at.frame_index number_of_sprites,
-                                              number_of_frames_to_show_each_sprite,
-                                              does_sprite_loop
-    file_name = path.split(".")[0]
-    file_name[-1] = sprite_index.to_s
-  	@path = "#{file_name}.png"
+  	@path = animation_generator(number_of_sprites: @no_of_sprites)
   end
 
   def movement(args)
-		if args.inputs.keyboard.d
-			@x += @movement_speed
-			@angle = 0
-			@flip_vertically = false
-		end
-		if args.inputs.keyboard.w
-			@y += @movement_speed
-			@angle = 90
-			@flip_vertically = false
-		end
-		if args.inputs.keyboard.a
-			@x -= @movement_speed
-			@angle = 180
-			@flip_vertically = true
-		end
-		if args.inputs.keyboard.s
-			@y -= @movement_speed
-			@angle = 270
-			@flip_vertically = false
-		end
+    if @move_logic
+      @move_logic.call(self)
+    else
+  		if args.inputs.keyboard.key_held.send(@keys[:forward])
+  			@x += @movement_speed
+  			@angle = 0
+  			@flip_vertically = false
+  		end
+  		if args.inputs.keyboard.key_held.send(@keys[:up])
+  			@y += @movement_speed
+  			@angle = 90
+  			@flip_vertically = false
+  		end
+  		if args.inputs.keyboard.key_held.send(@keys[:left])
+  			@x -= @movement_speed
+  			@angle = 180
+  			@flip_vertically = true
+  		end
+  		if args.inputs.keyboard.key_held.send(@keys[:down])
+  			@y -= @movement_speed
+  			@angle = 270
+  			@flip_vertically = false
+  		end
+    end
 	end
 
 	def attack(enemy, args)
-    # if args.inputs.keyboard.key_down.space
-		  fire_ball = @fire_balls.pop()
-      # if fire_ball
-      #   args.outputs.sprites << fire_ball.cast(@x, @y, @angle) 
-      #   args.state.fire_ball = fire_ball
-      # end
+    fire_ball = @fire_balls.pop
+    if @type == :normal
       args.state.fire_balls << fire_ball.cast(x: @x, y: @y, angle: @angle, e_x: enemy.x, e_y: enemy.y) if fire_ball
-    # end
+    else
+      if (args.state.delta_distance > 0 && @angle == 180) || (args.state.delta_distance > 0 && @angle == 0)
+        args.state.fire_balls << fire_ball.cast(x: @x, y: @y, angle: @angle, e_x: enemy.x, e_y: enemy.y)
+        args.state.cool_down_time = cool_down_time
+      end
+    end
 	end
 end
