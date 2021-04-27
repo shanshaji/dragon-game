@@ -6,7 +6,7 @@ require 'app/entity/game.rb'
 def tick(args)
   user_interface(args)
   args.state.game_type ||= :pvp 
-  if args.inputs.keyboard.key_down.enter
+  if args.inputs.mouse.click
   	$game ||= Game.new(args.state.game_type )
   end
   $game&.perform_tick(args)

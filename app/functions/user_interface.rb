@@ -7,7 +7,7 @@ def user_interface(args)
   args.state.seconds = seconds if ticks % 3 == 0
   render_title(args)
   render_time_passed(args)
-  render_stars(args)
+  render_stars(args) if ticks == 0
   render_background(args)
   render_start_screen(args) unless $game
   if ticks % 255 < 127
@@ -20,15 +20,15 @@ def user_interface(args)
 end
 
 def render_game_instructions(args, a)
-  args.outputs.labels << [x: 640, y: 655, text: 'Press WASD to Move', size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255, a: a]
-  args.outputs.labels << [x: 640, y: 625, text: 'Press Space to Shoot', size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255, a: a]
+  args.outputs.labels << [x: 140, y: 655, text: 'Press WASD to Move', size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255, a: a]
+  args.outputs.labels << [x: 140, y: 625, text: 'Press Space to Shoot', size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255, a: a]
+  args.outputs.labels << [x: 1000, y: 655, text: 'Press Direction Keys to Move', size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255, a: a]
+  args.outputs.labels << [x: 1000, y: 625, text: 'Press Enter to Shoot', size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255, a: a]
 end
 
 def render_stars(args)
-  if args.state.tick_count == 0
-    args.state.stars = STAR_COUNT.map { |i| Star.new args.grid }
-    args.outputs.static_sprites << args.state.stars
-  end
+  args.state.stars = STAR_COUNT.map { |i| Star.new args.grid }
+  args.outputs.static_sprites << args.state.stars
 end
 
 def render_background(args)
@@ -48,9 +48,9 @@ end
 
 def render_start_screen(args)
   # args.outputs.solids << { x: 550, y: 408, w: 200, h: 45, r: 34, g: 49, b: 63, a: 255 }
-  args.outputs.labels << { x: 640, y: 436, text: 'Press Enter to Start', size_enum: -1, alignment_enum: 1, r: 0, g: 0, b: 0,
+  args.outputs.labels << { x: 640, y: 436, text: 'Click to Start', size_enum: -1, alignment_enum: 1, r: 0, g: 0, b: 0,
                            a: 150 }
-  args.outputs.labels << { x: 642, y: 438, text: 'Press Enter to Start', size_enum: -1, alignment_enum: 1, r: 0, g: 200,
+  args.outputs.labels << { x: 642, y: 438, text: 'Click to Start', size_enum: -1, alignment_enum: 1, r: 0, g: 200,
                            b: 25 }
   
 end

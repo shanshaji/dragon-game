@@ -9,6 +9,7 @@ class FireBall
 		@w = size
 		@h = size
 		@path = path
+		@rect = nil
 		@speed = speed
 		@active = true
 		@distance = distance
@@ -73,9 +74,9 @@ class FireBall
 	def move
 		fire_ball_move_logic
 		is_fire_ball_active
+		@rect = [@x, @y, @w, @h]
   		@path = animation_generator(number_of_sprites: 6, does_sprite_loop: true)
 	end
-
 
 
 	private

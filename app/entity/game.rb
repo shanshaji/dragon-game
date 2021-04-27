@@ -6,8 +6,8 @@ class Game
   def initialize(game_type)
     @game_type = game_type
     @player_1 = Dragon.new
-    @player_2 = Dragon.new(r: 0, x: 780, y: 380, movement_speed: 1, keys: {forward: :right, up: :up, left: :left, down: :down, fire_key: :enter})
-    @enemy_dragon = Dragon.new(type: :bot, flip_horizontally: true, x: 680, y: 180, w: 150, h: 150, path: "sprites/shan/dragon/Walk1.png", movement_speed: 1)
+    @player_2 = Dragon.new(r: 0, x: 943, y: 500, movement_speed: 1, keys: {forward: :right, up: :up, left: :left, down: :down, fire_key: :enter})
+    @enemy_dragon = Dragon.new(type: :bot, flip_horizontally: true, x: 590, y: 180, w: 150, h: 150, path: "sprites/shan/dragon/Walk1.png", movement_speed: 1)
     @players = [@player_1, @enemy_dragon, @player_2]
   end
 
@@ -38,15 +38,13 @@ class Game
   private
 
   def player_in_range?(player)
-  	flag = (player.x.between?(@enemy_dragon.x - 100, @enemy_dragon.x + 100) || player.y.between?(@enemy_dragon.y - 100, @enemy_dragon.y + 100))
-  	$gtk.notify! "#{flag}  #{player.x} #{player.y} #{@enemy_dragon.x} #{@enemy_dragon.y}"
-  	flag
+    (player.x.between?(@enemy_dragon.x - 100, @enemy_dragon.x + 100) || player.y.between?(@enemy_dragon.y - 100, @enemy_dragon.y + 100))
   end
 
   def move_fire_balls(fire_balls)
   	unless fire_balls.empty?
-		fire_balls.each(&:move)
-		fire_balls.delete_if { |fire_ball| fire_ball.active == false }
+		  fire_balls.each(&:move)
+		  fire_balls.delete_if { |fire_ball| fire_ball.active == false }
   	end
   end
 
