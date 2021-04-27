@@ -1,21 +1,20 @@
 require 'app/functions/animation_generator.rb'
 class FireBall 
 	attr_sprite
-	attr_accessor :active, :move_logic, :e_x, :e_y, :x_projection, :y_projection
-	def initialize(speed: 2, size: 20, path: 'mygame/sprites/misc/explosion-0.png', distance: 300, move_logic: nil)
+	attr_accessor :active, :move_logic, :rect, :power, :e_x, :e_y
+	def initialize(speed: 5, power: 5, size: 20, path: 'mygame/sprites/misc/explosion-0.png', distance: 300, move_logic: nil)
 		@x = nil
 		@y = nil
 		@angle = nil
 		@w = size
 		@h = size
 		@path = path
-		@rect = nil
+		@rect = [nil,nil,size,size]
 		@speed = speed
+		@power = power
 		@active = true
 		@distance = distance
 		@distance_travelled = 0
-		@x_projection = nil
-		@y_projection = nil
 		@e_x = nil
 		@e_y = nil
 		@move_logic = move_logic
@@ -45,27 +44,16 @@ class FireBall
 			@y = y
 		elsif angle == 90
 			@x = x
-			@y = y + 10 + @w
+			@y = y + 30 + @w
 		elsif angle == 180
-			@x = x - 30 + @w
+			@x = x - 50 + @w
 			@y = y
 		elsif angle == 270
 			@x = x
-			@y = y - 10 + @w
+			@y = y - 50 + @w
 		end
-		# @x = angle == 180 ? (x - 50 + @w) : (x + 50 + @w)
-		# @y = angle == 270 ? (y - 3 + @w): (y + 3 + @w)
+		@rect = [@x, @y, @w, @h]
 		@angle = angle
-		if x > e_x
-			@x_projection = :+
-		elsif x < e_x
-			@x_projection = :-
-		end
-		if y > e_y
-			@y_projection = :+
-		elsif y < e_y
-			@y_projection = :-
-		end
 		@e_x = e_x
 		@e_y = e_y
 		self
