@@ -50,7 +50,7 @@ class Game
   def spawn_special(args)
     random_x = args.grid.w.randomize:ratio
     random_y = args.grid.h.randomize:ratio
-    if args.state.tick_count % 1200 == 0
+    if args.state.tick_count % 1000 == 0
       @special_powers.shift if @special_powers.length >= 2
       @special_powers << SpecialPower.new
     end

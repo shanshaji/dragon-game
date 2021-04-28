@@ -34,7 +34,7 @@ end
 def render_background(args)
   args.outputs.background_color = [0, 0, 0]
   if args.state.tick_count == 0
-    args.outputs.static_sprites << { x: 0, y: 0, w: 1280, h: 720, path: 'mygame/sprites/shan/ground_2.png'}
+    args.outputs.static_sprites << { x: 0, y: 0, w: 1280, h: 720, path: 'sprites/shan/ground_2.png'}
   end
 end
 

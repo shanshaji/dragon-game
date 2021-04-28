@@ -2,7 +2,7 @@ require 'app/functions/animation_generator.rb'
 class FireBall 
 	attr_sprite
 	attr_accessor :active, :move_logic, :rect, :power, :e_x, :e_y
-	def initialize(number_of_sprites: 6, speed: 5, power: 5, size: 20, path: 'mygame/sprites/misc/explosion-0.png', distance: 300, move_logic: nil)
+	def initialize(number_of_sprites: 6, speed: 5, power: 5, size: 20, path: 'sprites/misc/explosion-0.png', distance: 300, move_logic: nil)
 		@x = nil
 		@y = nil
 		@angle = nil

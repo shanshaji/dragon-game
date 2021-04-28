@@ -10,7 +10,7 @@ class SpecialPower
 		@h = 40
 		file_name = SPECIAL_POWERS.keys.sample
 		@type = SPECIAL_POWERS[file_name]
-		@path = "mygame/sprites/shan/special_powers/#{file_name}.png"
+		@path = "sprites/shan/special_powers/#{file_name}.png"
 		@rect = [@x,@y,@w,@h]
 		@active = true
 	end
@@ -26,9 +26,9 @@ class SpecialPower
 		when :speed_decrease
 			target.movement_speed -= 1 unless target.movement_speed == 1
 		when :damage_bonus
-			5.times{ player.fire_balls.push(FireBall.new(path: 'mygame/sprites/shan/dragon/Fire_Attack-0.png', size: 40, power: 10, speed: 7))}
+			5.times{ player.fire_balls.push(FireBall.new(path: 'sprites/shan/dragon/Fire_Attack-0.png', size: 40, power: 10, speed: 7))}
 		when :rocket
-			5.times{ player.fire_balls.push(FireBall.new(path: 'mygame/sprites/shan/special-fire-ball/FB-0.png', size: 30, number_of_sprites: 5, power: 15))}
+			5.times{ player.fire_balls.push(FireBall.new(path: 'sprites/shan/special-fire-ball/FB-0.png', size: 30, number_of_sprites: 5, power: 15))}
 		end
 	end
 end
