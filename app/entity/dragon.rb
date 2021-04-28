@@ -5,7 +5,7 @@ require 'app/functions/ai_fire_ball_logic.rb'
 
 class Dragon < Game
   attr_sprite
-  attr_accessor :keys, :cool_down_time, :movement_speed, :type
+  attr_accessor :keys, :cool_down_time, :movement_speed, :type, :health, :name, :fire_balls
   def initialize(name: "purple",type: :player, flip_horizontally: false, flip_vertically: false, x: 100, y: 500, w: 50, h: 50, r: 255, g: 255, b: 255, a: 255, path: "sprites/misc/dragon-0.png", cool_down_time: 100, movement_speed: 2, no_of_sprites: 5, keys: {forward: :d, up: :w, left: :a, down: :s, fire_key: :space})
     @x = x
     @y = y
@@ -48,20 +48,23 @@ class Dragon < Game
     @health <= 0
   end
 
+  def picked_special_power? special_power
+    special_power.rect.intersect_rect?([@x,@y,@w,@h])
+  end
+
+  # def activate_time_sensitive_special_power special_power
+  #   time_now = Time.now
+  # end
+
   def calculate_collisions args
     enemy_fire_balls = (args.state.fire_balls - @fire_balls)
     enemy_fire_balls.each do |fire_ball|
       if  fire_ball.rect.intersect_rect?([@x,@y,@w,@h])
         @health -= fire_ball.power
         fire_ball.active = false
-        $gtk.notify! "Health #{@health} #{enemy_fire_balls}"
+        # $gtk.notify! "Health #{@health} #{enemy_fire_balls}"
       end
     end
-
-    # # All exploded bullets are rejected or removed from the bullets collection
-    # # and any dead enemy is rejected from the enemies collection.
-    # args.state.bullets = args.state.bullets.reject(&:exploded)
-    # args.state.enemies = args.state.enemies.reject(&:dead)
   end
   def fly
     @path = animation_generator(number_of_sprites: @no_of_sprites)

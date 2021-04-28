@@ -2,7 +2,7 @@ require 'app/functions/animation_generator.rb'
 class FireBall 
 	attr_sprite
 	attr_accessor :active, :move_logic, :rect, :power, :e_x, :e_y
-	def initialize(speed: 5, power: 5, size: 20, path: 'mygame/sprites/misc/explosion-0.png', distance: 300, move_logic: nil)
+	def initialize(number_of_sprites: 6, speed: 5, power: 5, size: 20, path: 'mygame/sprites/misc/explosion-0.png', distance: 300, move_logic: nil)
 		@x = nil
 		@y = nil
 		@angle = nil
@@ -18,6 +18,7 @@ class FireBall
 		@e_x = nil
 		@e_y = nil
 		@move_logic = move_logic
+		@number_of_sprites = number_of_sprites
 	end
   # dest   = destination_rect(state)
   # source = source_rect(state),
@@ -40,17 +41,17 @@ class FireBall
 
 	def cast(x:, y:, angle:, e_x:, e_y:)
 		if angle == 0
-			@x = x + 30 + @w
+			@x = x + 40 + @w
 			@y = y
 		elsif angle == 90
 			@x = x
-			@y = y + 30 + @w
+			@y = y + 40 + @w
 		elsif angle == 180
-			@x = x - 50 + @w
+			@x = x - 40 - @w
 			@y = y
 		elsif angle == 270
 			@x = x
-			@y = y - 50 + @w
+			@y = y - 40 - @w
 		end
 		@rect = [@x, @y, @w, @h]
 		@angle = angle
@@ -63,7 +64,7 @@ class FireBall
 		fire_ball_move_logic
 		is_fire_ball_active
 		@rect = [@x, @y, @w, @h]
-  		@path = animation_generator(number_of_sprites: 6, does_sprite_loop: true)
+  		@path = animation_generator(number_of_sprites: @number_of_sprites, does_sprite_loop: true)
 	end
 
 

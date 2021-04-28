@@ -6,7 +6,7 @@ def user_interface(args)
   args.state.seconds ||= seconds
   args.state.seconds = seconds if ticks % 3 == 0
   render_title(args)
-  render_time_passed(args)
+  # render_time_passed(args)
   render_stars(args) if ticks == 0
   render_background(args)
   render_start_screen(args) unless $game
@@ -22,8 +22,8 @@ end
 def render_game_instructions(args, a)
   args.outputs.labels << [x: 140, y: 655, text: 'Press WASD to Move', size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255, a: a]
   args.outputs.labels << [x: 140, y: 625, text: 'Press Space to Shoot', size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255, a: a]
-  args.outputs.labels << [x: 1000, y: 655, text: 'Press Direction Keys to Move', size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255, a: a]
-  args.outputs.labels << [x: 1000, y: 625, text: 'Press Enter to Shoot', size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255, a: a]
+  args.outputs.labels << [x: 1110, y: 655, text: 'Press Direction Keys to Move', size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255, a: a]
+  args.outputs.labels << [x: 1110, y: 625, text: 'Press Enter to Shoot', size_enum: 0, alignment_enum: 1, r: 255, g: 255, b: 255, a: a]
 end
 
 def render_stars(args)
