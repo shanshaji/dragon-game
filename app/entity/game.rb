@@ -7,8 +7,8 @@ class Game
 
   def initialize(game_type)
     @game_type = game_type
-    @player_1 = Dragon.new
-    @player_2 = Dragon.new(name: "fire", r: 200,g: 247, b: 0, x: 1110, y: 500, keys: {forward: :right, up: :up, left: :left, down: :down, fire_key: :enter})
+    @player_1 = Dragon.new(name: "draco")
+    @player_2 = Dragon.new(name: "pyre", r: 200,g: 247, b: 0, x: 1110, y: 500, keys: {forward: :right, up: :up, left: :left, down: :down, fire_key: :enter})
     @enemy_dragon = Dragon.new(type: :bot, flip_horizontally: true, x: 590, y: 180, w: 150, h: 150, path: "sprites/shan/dragon/Walk1.png", movement_speed: 1)
     # @players = [@player_1, @enemy_dragon, @player_2]
     @players = [@player_1, @player_2]
@@ -50,7 +50,7 @@ class Game
   def spawn_special(args)
     random_x = args.grid.w.randomize:ratio
     random_y = args.grid.h.randomize:ratio
-    if args.state.tick_count % 1000 == 0
+    if args.state.tick_count % 900 == 0
       @special_powers.shift if @special_powers.length >= 2
       @special_powers << SpecialPower.new
     end

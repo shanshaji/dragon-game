@@ -2,7 +2,7 @@ def dragon_info args, dragons
 	args.outputs.labels << {
 	  x:              0,
 	  y:              680,
-	  text:           "#{dragons[0].name.capitalize} Dragon",
+	  text:           "#{dragons[0].name.capitalize}",
 	  r:              155,
 	  g:              50,
 	  b:              50,
@@ -29,9 +29,9 @@ def dragon_info args, dragons
 	  a: 255
 	}
 	args.outputs.labels << {
-	  x:              1170,
+	  x:              1230,
 	  y:              680,
-	  text:           "#{dragons[1].name.capitalize} Dragon",
+	  text:           "#{dragons[1].name.capitalize}",
 	  r:              155,
 	  g:              50,
 	  b:              50,
