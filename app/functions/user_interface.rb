@@ -1,4 +1,3 @@
-require 'app/entity/star.rb'
 
 def user_interface(args)
   ticks = args.state.tick_count

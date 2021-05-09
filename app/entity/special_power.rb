@@ -1,5 +1,3 @@
-require "app/constants/special_powers.rb"
-require 'app/entity/fire_ball.rb'
 class SpecialPower
 	attr_sprite
 	attr_accessor :rect, :active

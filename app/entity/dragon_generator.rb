@@ -1,0 +1,2 @@
+class DragonGenerator
+end

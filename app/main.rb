@@ -1,8 +1,4 @@
-require 'app/constants/constants.rb'
-require 'app/functions/user_interface.rb'
-require 'app/entity/game.rb'
-
-
+require "app/autoloader.rb"
 def tick(args)
   user_interface(args)
   args.state.game_type ||= :pvp 

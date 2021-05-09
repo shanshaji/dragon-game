@@ -1,9 +1,4 @@
-require 'app/entity/fire_ball.rb'
-require 'app/functions/animation_generator.rb'
-require 'app/functions/ai_move_logic.rb'
-require 'app/functions/ai_fire_ball_logic.rb'
-
-class Dragon < Game
+class Dragon < AnimatedSprite
   attr_sprite
   attr_accessor :keys, :cool_down_time, :movement_speed, :type, :health, :name, :fire_balls
   def initialize(name: "purple",type: :player, flip_horizontally: false, flip_vertically: false, x: 100, y: 500, w: 50, h: 50, r: 255, g: 255, b: 255, a: 255, path: "sprites/misc/dragon-0.png", cool_down_time: 100, movement_speed: 2, no_of_sprites: 5, keys: {forward: :d, up: :w, left: :a, down: :s, fire_key: :space})
@@ -29,8 +24,8 @@ class Dragon < Game
     if type == :player
       @fire_balls =  Array.new(100) { FireBall.new()}
     else
-      @fire_balls =  Array.new(100) { FireBall.new(path: 'mygame/sprites/shan/dragon/Fire_Attack-0.png', size: 50, move_logic: fire_ball_move_logic)}
-      @move_logic = dragon_move_logic
+      @fire_balls =  Array.new(100) { FireBall.new(path: 'mygame/sprites/shan/dragon/Fire_Attack-0.png', size: 50, move_logic: BotLogic::FIRE_BALL)}
+      @move_logic = BotLogic::MOVE
     end
   end
 

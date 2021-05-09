@@ -1,8 +1,3 @@
-require 'app/functions/screen_bound.rb'
-require 'app/entity/dragon.rb'
-require 'app/functions/dragon_info.rb'
-require 'app/entity/special_power.rb'
-
 class Game
 
   def initialize(game_type)
