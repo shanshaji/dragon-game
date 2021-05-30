@@ -8,7 +8,6 @@ class AnimatedSprite
                                               number_of_frames_to_show_each_sprite,
                                               does_sprite_loop
     file_name = @path.split(".")[0]
-    # $gtk.log file_name
     file_name[-1] = sprite_index.to_s
     "#{file_name}.png"
   end

@@ -47,17 +47,12 @@ class Dragon < AnimatedSprite
     special_power.rect.intersect_rect?([@x,@y,@w,@h])
   end
 
-  # def activate_time_sensitive_special_power special_power
-  #   time_now = Time.now
-  # end
-
   def calculate_collisions args
     enemy_fire_balls = (args.state.fire_balls - @fire_balls)
     enemy_fire_balls.each do |fire_ball|
       if  fire_ball.rect.intersect_rect?([@x,@y,@w,@h])
         @health -= fire_ball.power
         fire_ball.active = false
-        # $gtk.notify! "Health #{@health} #{enemy_fire_balls}"
       end
     end
   end

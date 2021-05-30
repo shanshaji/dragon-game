@@ -19,24 +19,6 @@ class FireBall < AnimatedSprite
 		@move_logic = move_logic
 		@number_of_sprites = number_of_sprites
 	end
-  # dest   = destination_rect(state)
-  # source = source_rect(state),
-  # outputs.sprites << create_sprite(
-  #   'sprites/86.png',
-  #   x: dest.x,
-  #   y: dest.y,
-  #   w: dest.w,
-  #   h: dest.h,
-  #   angle: state.angle,
-  #   source_x: source.x,
-  #   source_y: source.y,
-  #   source_w: source.w,
-  #   source_h: source.h,
-  #   flip_h: false,
-  #   flip_v: false,
-  #   rotation_anchor_x: 0.7,
-  #   rotation_anchor_y: 0.5
-  # )
 
 	def cast(x:, y:, angle:, e_x:, e_y:)
 		if angle == 0
