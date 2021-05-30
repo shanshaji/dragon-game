@@ -15,6 +15,5 @@ def tick(args)
     args.state.fire_balls = nil
   	$game = nil
   end
-  # args.outputs.debug << args.gtk.framerate_diagnostics_primitives
 end
 $gtk.reset

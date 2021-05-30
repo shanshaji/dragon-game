@@ -5,7 +5,6 @@ def user_interface(args)
   args.state.seconds ||= seconds
   args.state.seconds = seconds if ticks % 3 == 0
   render_title(args)
-  # render_time_passed(args)
   render_stars(args) if ticks == 0
   render_background(args)
   render_start_screen(args) unless $game

@@ -21,12 +21,7 @@ class Dragon < AnimatedSprite
     @no_of_sprites = no_of_sprites
     @cool_down_time = cool_down_time
     @type = type
-    if type == :player
-      @fire_balls =  Array.new(100) { FireBall.new()}
-    else
-      @fire_balls =  Array.new(100) { FireBall.new(path: 'mygame/sprites/shan/dragon/Fire_Attack-0.png', size: 50, move_logic: BotLogic::FIRE_BALL)}
-      @move_logic = BotLogic::MOVE
-    end
+    @fire_balls =  Array.new(100) { FireBall.new()}
   end
 
   def animate(args)
